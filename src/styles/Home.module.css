@@ -37,3 +37,17 @@
     text-decoration: line-through;
     color: gray;
 }
+
+.clearButton {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: crimson;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.clearButton:hover {
+    background-color: darkred;
+}

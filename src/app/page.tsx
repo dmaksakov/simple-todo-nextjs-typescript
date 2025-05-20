@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 
 interface Todo {
@@ -12,6 +12,19 @@ interface Todo {
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
+
+  // Load todos from localStorage on first render
+  useEffect(() => {
+    const stored = localStorage.getItem('todos');
+    if (stored) {
+      setTodos(JSON.parse(stored));
+    }
+  }, []);
+
+  // Save todos to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = () => {
     if (input.trim() === '') return;
@@ -31,6 +44,12 @@ export default function Home() {
 
   const deleteTodo = (id: number) => {
     setTodos(todos.filter(todo => todo.id !== id));
+  };
+
+  const clearAll = () => {
+    if (confirm("Are you sure you want to delete all todos?")) {
+      setTodos([]);
+    }
   };
 
   return (
@@ -54,6 +73,11 @@ export default function Home() {
               </li>
           ))}
         </ul>
+
+        <button onClick={clearAll} className={styles.clearButton}>
+          Clear All Todos
+        </button>
+
       </div>
   );
 }
