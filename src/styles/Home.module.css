@@ -1,0 +1,39 @@
+.container {
+    padding: 2rem;
+    font-family: sans-serif;
+    max-width: 600px;
+    margin: auto;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputGroup input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.inputGroup button {
+    padding: 0.5rem 1rem;
+}
+
+.todoList {
+    list-style: none;
+    padding: 0;
+}
+
+.todoList li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.done span {
+    text-decoration: line-through;
+    color: gray;
+}
