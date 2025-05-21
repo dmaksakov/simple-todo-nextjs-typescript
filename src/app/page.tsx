@@ -12,6 +12,7 @@ interface Todo {
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
+  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
 
   // Load todos from localStorage on first render
   useEffect(() => {
@@ -52,6 +53,13 @@ export default function Home() {
     }
   };
 
+  const filteredTodos = todos.filter(todo => {
+    if (filter === 'active') return !todo.completed;
+    if (filter === 'completed') return todo.completed;
+    return true; // 'all'
+  });
+
+
   return (
       <div className={styles.container}>
         <h1>Next.js Todo App</h1>
@@ -65,8 +73,14 @@ export default function Home() {
           <button onClick={addTodo}>Add</button>
         </div>
 
+        <div className={styles.filters}>
+          <button onClick={() => setFilter('all')} className={filter === 'all' ? styles.activeFilter : ''}>All</button>
+          <button onClick={() => setFilter('active')} className={filter === 'active' ? styles.activeFilter : ''}>Active</button>
+          <button onClick={() => setFilter('completed')} className={filter === 'completed' ? styles.activeFilter : ''}>Completed</button>
+        </div>
+
         <ul className={styles.todoList}>
-          {todos.map(todo => (
+          {filteredTodos.map(todo => (
               <li key={todo.id} className={todo.completed ? styles.done : ''}>
                 <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
                 <button onClick={() => deleteTodo(todo.id)}>❌</button>

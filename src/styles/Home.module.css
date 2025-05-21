@@ -51,3 +51,24 @@
 .clearButton:hover {
     background-color: darkred;
 }
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.filters button {
+    padding: 0.3rem 0.7rem;
+    border: 1px solid #ccc;
+    color: gray;
+    background: #f5f5f5;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.activeFilter {
+    background-color: #0070f3!important;
+    color: white!important;
+    border-color: #0070f3;
+}
