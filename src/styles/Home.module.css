@@ -72,3 +72,15 @@
     color: white!important;
     border-color: #0070f3;
 }
+
+.todoList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.todoList li input {
+    flex: 1;
+    padding: 0.3rem;
+}

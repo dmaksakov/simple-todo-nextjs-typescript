@@ -13,6 +13,8 @@ export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [input, setInput] = useState('');
   const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingText, setEditingText] = useState<string>('');
 
   // Load todos from localStorage on first render
   useEffect(() => {
@@ -82,8 +84,35 @@ export default function Home() {
         <ul className={styles.todoList}>
           {filteredTodos.map(todo => (
               <li key={todo.id} className={todo.completed ? styles.done : ''}>
-                <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
-                <button onClick={() => deleteTodo(todo.id)}>❌</button>
+                {editingId === todo.id ? (
+                    <>
+                      <input
+                          value={editingText}
+                          onChange={(e) => setEditingText(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              setTodos(todos.map(t =>
+                                  t.id === todo.id ? { ...t, text: editingText } : t
+                              ));
+                              setEditingId(null);
+                            }
+                          }}
+                          autoFocus
+                      />
+                      <button onClick={() => setEditingId(null)}>Cancel</button>
+                    </>
+                ) : (
+                    <>
+                      <span onClick={() => toggleTodo(todo.id)}>{todo.text}</span>
+                      <div>
+                        <button onClick={() => {
+                          setEditingId(todo.id);
+                          setEditingText(todo.text);
+                        }}>✏️</button>
+                        <button onClick={() => deleteTodo(todo.id)}>❌</button>
+                      </div>
+                    </>
+                )}
               </li>
           ))}
         </ul>
